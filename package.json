@@ -31,7 +31,7 @@
   },
   "homepage": "https://github.com/laoshu133/sfnt2woff#readme",
   "dependencies": {
-    "optimist": "^0.6.1",
-    "pako": "^1.0.6"
+    "pako": "^1.0.6",
+    "buffer": "^6.0.3"
   }
 }
