@@ -167,7 +167,7 @@ function fourByteAlign(bit) {
  */
 function fourByteAlignedBuffer(buf, len) {
     var alignedLen = fourByteAlign(len);
-    var woffData = new Buffer(alignedLen);
+    var woffData = new JSBuffer(alignedLen);
     var zeroPaddedLen = alignedLen - buf.length;
     for(var i = 0; i < buf.length; ++i) {
         woffData[i] = buf[i];
@@ -188,7 +188,7 @@ function fourByteAlignedBuffer(buf, len) {
 function constructWOFFHeader(flavor, woffLen, numTables, totalSfntSize) {
     var WOFF_HEADER_LENGTH = 44;
     var WOFF_SIGNATURE = 0x774F4646;
-    var WOFFHeader = new Buffer(WOFF_HEADER_LENGTH);
+    var WOFFHeader = new JSBuffer(WOFF_HEADER_LENGTH);
 
     WOFFHeader.writeUInt32BE(WOFF_SIGNATURE, 0); // Woff Signature
     WOFFHeader.writeUInt32BE(flavor, 4); // Flavor
@@ -210,9 +210,9 @@ function constructWOFFHeader(flavor, woffLen, numTables, totalSfntSize) {
  * Here's a top down structure: Header <- TableDir <- Table Data
  */
 function constructWOFF(WOFFHeader, WOFFTableDir, WOFFTableData, WOFFSize) {
-    var WOFF = Buffer.concat([WOFFHeader, WOFFTableDir]);
+    var WOFF = JSBuffer.concat([WOFFHeader, WOFFTableDir]);
     for(var i = 0; i < WOFFTableData.length; ++i) {
-        WOFF = Buffer.concat([WOFF, WOFFTableData[i]]);
+        WOFF = JSBuffer.concat([WOFF, WOFFTableData[i]]);
     }
     /* Throw an exception if the WOFF's size doesn't match the size specified in the header */
     if(WOFF.length !== WOFFSize) {
